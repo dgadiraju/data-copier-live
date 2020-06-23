@@ -63,6 +63,7 @@ FLUSH PRIVILEGES;
 ```
 executor = SequentialExecutor
 ```
+* We can also use other Executors.
 * Update **sql_alchemy_conn** with MySQL URL.
 ```
 sql_alchemy_conn = mysql+mysqlconnector://airflow:itversity@localhost:4306/airflow
@@ -83,6 +84,25 @@ airflow webserver -p 8080 -D
 airflow scheduler -D
 ```
 * Then you can go to **http://ipaddress:8080**
+
+We can switch over to **CeleryExecutor** by following these steps.
+* Install Celery using `pip install apache-airflow['celery']`
+* Change executor to CeleryExecutor
+```
+executor = CeleryExecutor
+```
+* Kill all the webserver and scheduler processes.
+```shell script
+ps -ef|grep scheduler|awk -F" " '{ print $2 }'|xargs kill -9
+cat *pid|xargs kill -9
+rm *pid
+ps -ef|grep airflow #Kill any remaining sessions
+```
+* Start the airflow components and validate by visiting the URL.
+```
+airflow webserver -p 8080 -D
+airflow scheduler -D
+```
 ## Schedule using AirFlow
 By this time we should be ready with our application as well as AirFlow. Let us understand how we can integrate both.
 * As we are going to run our applicatio using Docker Container, we will use DockerOperator provided by AirFlow.
