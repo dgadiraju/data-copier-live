@@ -80,7 +80,7 @@ executor = SequentialExecutor
 * We can also use other Executors.
 * Update **sql_alchemy_conn** with MySQL URL.
 ```
-sql_alchemy_conn = mysql+mysqlconnector://airflow:itversity@localhost:4306/airflow
+sql_alchemy_conn = mysql+mysqlconnector://airflow:itversity@localhost:4306/airflow?use_pure=True
 ```
 * Make sure some of the properties related to concurrency is adjusted to lower numbers.
 ```shell script
