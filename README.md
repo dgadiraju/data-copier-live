@@ -9,6 +9,20 @@ A simple pipeline to copy data from a database (MySQL) to another database (Post
 
 ## Run Application
 
+* Building Docker Image - `docker build -t data-copier-live .`
+* Running Application using Docker with entrypoint.
+```shell script
+docker run --name data-copier \
+  -v `pwd`:/app \
+  -it \
+-e SOURCE_DB_USER=retail_user \
+-e SOURCE_DB_PASS=itversity \
+-e TARGET_DB_USER=retail_user \
+-e TARGET_DB_PASS=itversity \
+--entrypoint python \
+data-copier-live app.py dev departments
+```
+
 ## Setup AirFlow
 
 Let us setup AirFlow and develop the pipeline for Data Pipeline.

@@ -46,6 +46,11 @@ def get_connection(db_type, db_host, db_name, db_user, db_pass):
     return connection
 
 
-def get_tables(path):
+def get_tables(path, table_list):
     tables = pd.read_csv(path, sep=':')
-    return tables.query('to_be_loaded == "yes"')
+    if table_list == 'all':
+        return tables.query('to_be_loaded == "yes"')
+    else:
+        table_list_df = pd.DataFrame(table_list.split(','), columns=['table_name'])
+        return tables.join(table_list_df.set_index('table_name'), on='table_name', how='inner'). \
+            query('to_be_loaded == "yes"')
