@@ -24,8 +24,13 @@ def main():
     for table_name in tables['table_name']:
         logger.info(f'reading data for {table_name}')
         data, column_names = read_table(db_details, table_name)
-        logger.error(f'loading data for {table_name}')
+        logger.info(f'loading data for {table_name}')
         load_table(db_details, data, column_names, table_name)
+
+
+def truncate_tables(env, tables):
+    db_details = load_db_details(env)
+
 
 
 if __name__ == '__main__':
